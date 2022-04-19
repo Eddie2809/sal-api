@@ -4,13 +4,9 @@ const port = 3001
 const cors = require('cors')
 
 const db = require('knex')({
-    client: 'pg',
-    connection: {
-        host: 'localhost',
-        port: '5432',
-        user: 'postgres',
-        password: 'gato',
-        database: 'saldb'
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        refectUnauthorized: false
     }
 })
 
@@ -321,6 +317,4 @@ app.post('/cancel-reservation',(req,res) => {
     .catch(err => res.status(400).json(err))
 })
 
-app.listen(port, () => {
-    console.log(`Listening to port ${port}`)
-})
+app.listen(port)
